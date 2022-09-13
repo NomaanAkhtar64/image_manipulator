@@ -1,0 +1,15 @@
+{
+  "name": "image_maniupulator",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "concurrently \"cd api && npm run dev\" \"cd app && npm run dev\" "
+  },
+  "author": "Nomaan Akhtar",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^7.4.0"
+  }
+}
+
