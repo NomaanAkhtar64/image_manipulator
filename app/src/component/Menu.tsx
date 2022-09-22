@@ -45,19 +45,19 @@ const Menu = () => {
   return (
     <div
       className={conditionalStyle(
-        'flex flex-col items-center menu-cont',
+        'menu-cont flex flex-col items-center',
         isHome,
-        'h-fit my-auto',
-        'px-3 h-fit lg:h-full bg-zinc-800 dark:bg-white'
+        'my-auto h-fit',
+        'h-fit bg-zinc-200 px-3 dark:bg-zinc-800 lg:h-full'
       )}
     >
       <Link
         to='/'
         className={conditionalStyle(
-          'font-roboto text-center tracking-widest text-teal-500 text-outline-1 py-2',
+          'font-roboto text-outline-1 py-2 text-center tracking-widest text-teal-500',
           isHome,
           'text-4xl',
-          'text-3xl hidden lg:block'
+          'hidden text-3xl lg:block'
         )}
         style={{ WebkitTextStroke: '1px #8BC2B5' }}
       >
@@ -65,10 +65,10 @@ const Menu = () => {
       </Link>
       <div
         className={conditionalStyle(
-          'py-4 lg:py-10  services',
+          'services py-4  lg:py-10',
           isHome,
           'grid  grid-cols-2 gap-10',
-          'flex lg:flex-col flex-wrap flex-row gap-2 sm:gap-10'
+          'flex flex-row flex-wrap gap-2 sm:gap-10 lg:flex-col'
         )}
         ref={serviceParent}
       >
@@ -88,8 +88,8 @@ const Menu = () => {
               className={conditionalStyle(
                 'rounded-2xl',
                 isHome,
-                'p-8 bg-zinc-800 dark:bg-zinc-200',
-                'p-5 bg-white dark:bg-zinc-800'
+                'bg-zinc-200 p-8 dark:bg-zinc-800',
+                'bg-transparent p-5 '
               )}
             >
               <svg
@@ -97,8 +97,8 @@ const Menu = () => {
                 className={conditionalStyle(
                   'fill-teal-700',
                   isHome,
-                  'w-14 h-14',
-                  'w-8 h-8'
+                  'h-14 w-14',
+                  'h-8 w-8'
                 )}
                 viewBox='0 0 16 16'
               >
@@ -108,7 +108,7 @@ const Menu = () => {
             {isHome && (
               <p
                 style={{ letterSpacing: 6 }}
-                className='text-md font-roboto font-semibold py-2 dark:text-zinc-300'
+                className='text-md font-roboto py-2 font-semibold dark:text-zinc-300'
               >
                 {service.text}
               </p>
@@ -121,3 +121,4 @@ const Menu = () => {
 };
 
 export default Menu;
+

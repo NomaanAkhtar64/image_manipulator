@@ -2,53 +2,8 @@ import { useAutoAnimate } from '@formkit/auto-animate/react';
 import React, { useEffect, useRef, useState } from 'react';
 import { ImageAPI } from '../api/image';
 import Layout from '../component/Layout';
-import { useWindowSize } from '../hooks/useWindowSize';
+import { useViewerMaxSize } from '../hooks/viewer';
 import { conditionalStyle } from '../utils';
-
-function useMaxSize(image: IMImage): {
-  width: number;
-  height: number;
-} {
-  let aspectRatio = image.w / image.h;
-  const win = useWindowSize();
-
-  const [maxWidth, setMaxWidth] = useState(600);
-  const [maxHeight, setMaxHeight] = useState(600 * (image.h / image.w));
-
-  useEffect(() => {
-    if (win.width >= 1024) {
-      // lg
-      let w = Math.min(win.width - 500, 900);
-      setMaxWidth(w);
-      setMaxHeight(Math.round(w / aspectRatio));
-    } else if (win.width >= 768) {
-      // md
-      setMaxWidth(700);
-      setMaxHeight(Math.round(700 / aspectRatio));
-    } else if (win.width >= 640) {
-      // sm
-      setMaxWidth(600);
-      setMaxHeight(Math.round(600 / aspectRatio));
-    } else {
-      // Default
-      let PADDING = 6;
-      let width = win.width - PADDING * 2;
-      let mHeight = Math.round(width / aspectRatio);
-      if (mHeight < win.height) {
-        setMaxWidth(width);
-        setMaxHeight(mHeight);
-      } else {
-        setMaxWidth(Math.round(win.height * aspectRatio));
-        setMaxHeight(win.height);
-      }
-    }
-  }, [win.width, win.height]);
-
-  return {
-    width: maxWidth,
-    height: maxHeight,
-  };
-}
 
 interface EditorProps {
   image: IMImage;
@@ -58,7 +13,7 @@ function Editor({ image }: EditorProps) {
   const aspectRatio = image.w / image.h;
   const [widthPercent, setWidthPercent] = useState(1); // percent
   const [heightPercent, setHeightPercent] = useState(1); // percent
-  const max = useMaxSize(image); // maximum image size of viewer (not the actual image)
+  const max = useViewerMaxSize(image); // maximum image size of viewer (not the actual image)
   const width = Math.round(widthPercent * max.width); // maximum image size of selected region in viewer
   const height = Math.round(heightPercent * max.height);
   const actualWidth = Math.round(image.w * widthPercent); // actual size
@@ -140,9 +95,10 @@ function Editor({ image }: EditorProps) {
       window.removeEventListener('mousemove', onMouseMove);
     };
   }, [isDragging, max.width, max.height, isLocked]);
+
   return (
     <div
-      className='image-viewer flex flex-col lg:flex-row mx-auto py-4'
+      className='image-viewer mx-auto flex flex-col py-4 lg:flex-row'
       data-aspectratio={aspectRatio}
     >
       <div className='relative'>
@@ -157,7 +113,7 @@ function Editor({ image }: EditorProps) {
             backgroundSize: `${max.width}px ${max.height}px`,
           }}
         />
-        <div className='content absolute left-0 bottom-0 outline outline-4 outline-blue-500'>
+        <div className='content absolute left-0 bottom-0 outline outline-4 outline-teal-500 dark:outline-teal-900'>
           <img
             ref={imageRef}
             style={{
@@ -169,7 +125,7 @@ function Editor({ image }: EditorProps) {
           <div className='relative'></div>
         </div>
         <button
-          className='absolute z-10 bg-blue-600'
+          className='absolute z-10 bg-teal-600'
           ref={buttonRef}
           onMouseDown={onMouseDown}
           style={{
@@ -181,17 +137,17 @@ function Editor({ image }: EditorProps) {
         />
       </div>
       <div
-        className='border-1 border-solid border-zinc-400 py-4 font-roboto flex flex-col gap-4 mx-auto w-full px-4'
+        className='border-1 font-roboto mx-auto flex w-full flex-col gap-4 border-solid border-zinc-400 py-4 px-4 dark:text-gray-100'
         style={{
           maxWidth: '400px',
           minWidth: '250px',
         }}
       >
-        <div className='flex flex-row justify-between w-full'>
-          <label className='uppercase font-bold'>Width</label>
+        <div className='flex w-full flex-row items-center justify-between'>
+          <label className='font-bold uppercase'>Width</label>
           <input
             type='text'
-            className='w-14 text-center bg-transparent'
+            className='w-14 bg-transparent py-2 text-center dark:bg-zinc-700'
             value={actualWidth}
             onChange={(e) => {
               let newActualWidth = parseInt(
@@ -205,11 +161,11 @@ function Editor({ image }: EditorProps) {
             }}
           />
         </div>
-        <div className='flex flex-row justify-between w-full'>
-          <label className='uppercase font-bold'>Height</label>
+        <div className='flex w-full flex-row justify-between'>
+          <label className='font-bold uppercase'>Height</label>
           <input
             type='text'
-            className='w-14 text-center  bg-transparent'
+            className='w-14 bg-transparent  py-2 text-center dark:bg-zinc-700'
             value={actualHeight}
             onChange={(e) => {
               let newActualHeight = parseInt(
@@ -225,10 +181,10 @@ function Editor({ image }: EditorProps) {
         </div>
         <button
           className={conditionalStyle(
-            'flex justify-center  py-2 rounded-sm border-solid border-2 transition-colors ease-in duration-75',
+            'flex justify-center  rounded-sm border-2 border-solid py-2 transition-colors duration-75 ease-in',
             isLocked,
-            'bg-gray-500 text-gray-300 border-gray-600',
-            'bg-gray-200 text-gray-500 border-gray-300 hover:bg-gray-300 hover:border-gray-400 hover:text-black'
+            'border-gray-600 bg-gray-500 text-gray-300',
+            'border-gray-300 bg-gray-200 text-gray-500 hover:border-gray-400 hover:bg-gray-300 hover:text-black'
           )}
           onClick={() => {
             if (!isLocked) {
@@ -273,7 +229,7 @@ function Editor({ image }: EditorProps) {
               downloaderRef.current.click();
             }
           }}
-          className='bg-green-500 hover:bg-green-600 p-4 rounded-sm text-white'
+          className='rounded-sm bg-green-500 p-4 text-white hover:bg-green-600'
         >
           Download
         </button>
@@ -302,3 +258,4 @@ const ResizePage = () => {
 };
 
 export default ResizePage;
+

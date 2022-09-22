@@ -1,4 +1,4 @@
-type ServiceName = 'RESIZE' | 'CROP' | 'SLICE' | 'COLOR';
+type ServiceName = "RESIZE" | "CROP" | "SLICE" | "COLOR";
 interface Service {
   text: ServiceName;
   path: `/${string}`;
@@ -9,7 +9,7 @@ type RefDictionary = {
   [key in ServiceName]: React.RefObject<HTMLDivElement>;
 };
 
-type AppPaths = '/' | '/resize' | '/crop' | '/slice' | '/color';
+type AppPaths = "/" | "/resize" | "/crop" | "/slice" | "/color";
 
 type ServiceDictionary = {
   [key in AppPaths]: Service[];

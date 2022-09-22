@@ -1,4 +1,4 @@
-type SizePropertyName = 'width' | 'height';
+type SizePropertyName = "width" | "height";
 
 type Size = {
   [key in SizePropertyName]: number;
@@ -9,12 +9,12 @@ export function getSize(current: Size, element: Size, maxVal: number): Size {
 
   if (current.width >= current.height) {
     // LANDSCAPE/SQUARE
-    active = 'width';
-    other = 'height';
+    active = "width";
+    other = "height";
   } else {
     //PORTRAIT
-    active = 'height';
-    other = 'width';
+    active = "height";
+    other = "width";
   }
 
   let aspectRatio = current[other] / current[active]; // less than 1

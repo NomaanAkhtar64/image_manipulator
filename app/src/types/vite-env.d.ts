@@ -24,4 +24,3 @@ interface ResizeReq {
 type Dict<T> = {
   [key: string]: T;
 };
-

@@ -52,7 +52,7 @@ const Uploader: React.FC<UploaderProps> = ({ onUpload }) => {
   return (
     <div
       className={conditionalStyle(
-        'p-10 w-full h-48 md:w-96   ',
+        'h-48 w-full p-10 md:w-96 ',
         error !== '',
         'mb-auto',
         'my-auto'
@@ -60,10 +60,10 @@ const Uploader: React.FC<UploaderProps> = ({ onUpload }) => {
     >
       <FileDrop
         className={conditionalStyle(
-          'w-full h-full bg-white border-2  border-teal-700 p-2 font-roboto flex justify-center items-center rounded-lg text-teal-900',
+          'font-roboto flex h-full w-full  items-center justify-center rounded-lg border-2 border-teal-700 bg-zinc-200 p-2 text-teal-900 transition-colors delay-150 ease-linear dark:hover:bg-teal-700',
           isHoveringFile,
-          'border-dashed ',
-          'border-solid '
+          'border-dashed  dark:bg-teal-700',
+          'border-solid  dark:bg-zinc-900'
         )}
         onTargetClick={onTargetClick}
         onDragOver={() => setIsHoveringFile(true)}
@@ -71,7 +71,7 @@ const Uploader: React.FC<UploaderProps> = ({ onUpload }) => {
         onDrop={onDrop}
       >
         <div
-          className='flex flex-row gap-10 items-center justify-between cursor-pointer'
+          className='flex cursor-pointer flex-row items-center justify-between gap-10'
           ref={iconParent}
         >
           <svg
@@ -83,7 +83,7 @@ const Uploader: React.FC<UploaderProps> = ({ onUpload }) => {
               'transition-transform',
               isHoveringFile,
               'rotate-180',
-              'cursor-pointer rotate-0'
+              'rotate-0 cursor-pointer'
             )}
             viewBox='0 0 16 16'
           >
@@ -98,7 +98,7 @@ const Uploader: React.FC<UploaderProps> = ({ onUpload }) => {
           </svg>
           {!isHoveringFile && (
             <span
-              className='uppercase text-lg hidden sm:block'
+              className='hidden text-lg uppercase sm:block'
               style={{ letterSpacing: '5px' }}
             >
               Upload(s)
@@ -125,3 +125,4 @@ const Uploader: React.FC<UploaderProps> = ({ onUpload }) => {
 };
 
 export default Uploader;
+
