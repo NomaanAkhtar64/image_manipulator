@@ -48,7 +48,7 @@ const Menu = () => {
         'flex flex-col items-center menu-cont',
         isHome,
         'h-fit my-auto',
-        'px-3 h-fit md:h-full bg-zinc-800 dark:bg-white'
+        'px-3 h-fit lg:h-full bg-zinc-800 dark:bg-white'
       )}
     >
       <Link
@@ -57,7 +57,7 @@ const Menu = () => {
           'font-roboto text-center tracking-widest text-teal-500 text-outline-1 py-2',
           isHome,
           'text-4xl',
-          'text-3xl hidden md:block'
+          'text-3xl hidden lg:block'
         )}
         style={{ WebkitTextStroke: '1px #8BC2B5' }}
       >
@@ -65,10 +65,10 @@ const Menu = () => {
       </Link>
       <div
         className={conditionalStyle(
-          'py-4 md:py-10  services',
+          'py-4 lg:py-10  services',
           isHome,
           'grid  grid-cols-2 gap-10',
-          'flex md:flex-col flex-wrap flex-row gap-2 sm:gap-10'
+          'flex lg:flex-col flex-wrap flex-row gap-2 sm:gap-10'
         )}
         ref={serviceParent}
       >

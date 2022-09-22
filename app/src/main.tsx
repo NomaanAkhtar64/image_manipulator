@@ -9,7 +9,11 @@ import { v4 as uuid } from 'uuid';
 
 export const CLIENT_ID = uuid();
 
-ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
+const root = ReactDOM.createRoot(
+  document.getElementById('root') as HTMLElement
+);
+
+root.render(
   <React.StrictMode>
     <BrowserRouter>
       <App />

@@ -14,3 +14,8 @@ type AppPaths = '/' | '/resize' | '/crop' | '/slice' | '/color';
 type ServiceDictionary = {
   [key in AppPaths]: Service[];
 };
+
+interface Size {
+  width: number;
+  height: number;
+}

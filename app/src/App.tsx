@@ -6,7 +6,6 @@ import { useAutoAnimate } from '@formkit/auto-animate/react';
 import CropPage from './page/Crop';
 import SlicePage from './page/Slice';
 import ColorPage from './page/Color';
-
 function App() {
   const location = useLocation();
   const [parent] = useAutoAnimate<HTMLDivElement>({
@@ -20,7 +19,7 @@ function App() {
         'flex dark:bg-zinc-900 ',
         location.pathname === '/',
         'justify-center',
-        'flex-col-reverse md:flex-row'
+        'flex-col-reverse  lg:flex-row'
       )}
       ref={parent}
       style={{ height: '100vh' }}

@@ -2,14 +2,11 @@ import express from 'express';
 import dotenv from 'dotenv';
 import { ImageRouter } from './routes/image';
 import cors from 'cors';
-
 dotenv.config({ path: './dev.env' });
 
 const app = express();
 
 app.use(cors());
-app.use(express.json());
-
 app.use(express.static('./media'));
 
 app.use('/api/image/', ImageRouter);
