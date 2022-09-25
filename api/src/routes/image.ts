@@ -52,7 +52,6 @@ interface ResizeReq {
 }
 
 ImageRouter.post('/resize', express.json(), async (req, res) => {
-  console.log(req.body);
   const { id, ext, width, height } = req.body as ResizeReq;
 
   const relPath = await imglib.resize(id, ext, width, height);

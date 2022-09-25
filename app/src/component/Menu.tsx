@@ -108,7 +108,7 @@ const Menu = () => {
             {isHome && (
               <p
                 style={{ letterSpacing: 6 }}
-                className='text-md font-roboto py-2 font-semibold dark:text-zinc-300'
+                className='text-md font-roboto py-2 font-semibold text-teal-700'
               >
                 {service.text}
               </p>
@@ -121,4 +121,3 @@ const Menu = () => {
 };
 
 export default Menu;
-

@@ -1,6 +1,6 @@
-import React from "react";
-import ConditionalRender from "./Render";
-import Uploader from "./Uploader";
+import React from 'react';
+import ConditionalRender from './Render';
+import Uploader from './Uploader';
 interface LayoutProps {
   children?: JSX.Element | string | null;
   name: string;
@@ -17,15 +17,15 @@ const Layout: React.FC<LayoutProps> = ({
   contentRef,
 }) => {
   return (
-    <div className="flex h-full w-full  items-start justify-center lg:items-center lg:px-10">
+    <div className='w flex h-full w-full items-start justify-center overflow-hidden lg:items-center lg:px-10'>
       <div
-        className="flex h-fit w-full flex-col items-center  bg-zinc-200 py-4 dark:bg-zinc-800"
-        style={{ minHeight: "24 rem" }}
+        className='flex h-fit w-full flex-col items-center  bg-zinc-200 py-4 dark:bg-zinc-800'
+        style={{ minHeight: '24 rem' }}
         ref={contentRef}
       >
         <h1
-          className="font-roboto text-2xl font-bold uppercase text-teal-700"
-          style={{ letterSpacing: "20px" }}
+          className='font-roboto text-2xl font-bold uppercase text-teal-700'
+          style={{ letterSpacing: '20px' }}
         >
           {name}
         </h1>
@@ -40,3 +40,4 @@ const Layout: React.FC<LayoutProps> = ({
 };
 
 export default Layout;
+
