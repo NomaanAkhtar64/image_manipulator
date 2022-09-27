@@ -20,7 +20,15 @@ interface ResizeReq {
   width: number;
   height: number;
 }
-
+interface CropReq {
+  id: string;
+  ext: string;
+  width: number;
+  height: number;
+  left: number;
+  top: number;
+}
 type Dict<T> = {
   [key: string]: T;
 };
+

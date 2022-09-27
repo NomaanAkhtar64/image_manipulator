@@ -53,8 +53,23 @@ interface ResizeReq {
 
 ImageRouter.post('/resize', express.json(), async (req, res) => {
   const { id, ext, width, height } = req.body as ResizeReq;
-
   const relPath = await imglib.resize(id, ext, width, height);
+  const url = `http://${req.hostname}:4000/${relPath}`;
+  res.send(url);
+});
+
+interface CropReq {
+  id: string;
+  ext: string;
+  width: number;
+  height: number;
+  left: number;
+  top: number;
+}
+
+ImageRouter.post('/crop', express.json(), async (req, res) => {
+  const { id, ext, width, height, left, top } = req.body as CropReq;
+  const relPath = await imglib.crop(id, ext, width, height, left, top);
   const url = `http://${req.hostname}:4000/${relPath}`;
   res.send(url);
 });
