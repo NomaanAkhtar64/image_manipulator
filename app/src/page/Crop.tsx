@@ -33,10 +33,6 @@ function Editor({ image }: EditorProps) {
 
   const downloaderRef = useRef<HTMLAnchorElement>(null);
   const bgRef = useRef<HTMLDivElement>(null);
-  const topLeftBtnRef = useRef<HTMLButtonElement>(null);
-  const topRightBtnRef = useRef<HTMLButtonElement>(null);
-  const bottomLeftBtnRef = useRef<HTMLButtonElement>(null);
-  const bottomRightBtnRef = useRef<HTMLButtonElement>(null);
 
   const actualWidth = Math.round((x2 - x1) * image.w); // actual size: ;
   const actualHeight = Math.round((y2 - y1) * image.h);
@@ -116,18 +112,6 @@ function Editor({ image }: EditorProps) {
     [dragging]
   );
 
-  useWindowEvent('mousedown', ({ target }) => {
-    switch (target) {
-      case topLeftBtnRef.current:
-        return setDragging(DRAGGING_STATE.TOP_LEFT);
-      case topRightBtnRef.current:
-        return setDragging(DRAGGING_STATE.TOP_RIGHT);
-      case bottomLeftBtnRef.current:
-        return setDragging(DRAGGING_STATE.BOTTOM_LEFT);
-      case bottomRightBtnRef.current:
-        return setDragging(DRAGGING_STATE.BOTTOM_RIGHT);
-    }
-  });
   return (
     <div className='flex w-full justify-center py-4'>
       <div className='z-10 flex flex-col  lg:flex-row'>
@@ -153,7 +137,7 @@ function Editor({ image }: EditorProps) {
             }}
           />
           <div
-            className='absolute mt-auto outline outline-4 outline-teal-500 dark:outline-teal-900'
+            className='absolute  outline outline-2 outline-teal-500'
             style={{
               ...style,
               background: `url("${image.url}")`,
@@ -162,24 +146,20 @@ function Editor({ image }: EditorProps) {
             }}
           >
             <button
-              className='absolute z-10 h-3 w-3 -translate-x-1/2 -translate-y-1/2  bg-teal-600'
-              ref={topLeftBtnRef}
-              style={{ top: 0, left: 0 }}
+              className='absolute top-0 left-0 z-10 h-3 w-3 -translate-x-1/2 -translate-y-1/2  bg-teal-500'
+              onMouseDown={() => setDragging(DRAGGING_STATE.TOP_LEFT)}
             />
             <button
-              className='absolute z-10  h-3 w-3  -translate-x-1/2 -translate-y-1/2  bg-teal-600'
-              ref={topRightBtnRef}
-              style={{ top: 0, left: '100%' }}
+              className='absolute top-0 left-full z-10 h-3 w-3  -translate-x-1/2 -translate-y-1/2  bg-teal-500'
+              onMouseDown={() => setDragging(DRAGGING_STATE.TOP_RIGHT)}
             />
             <button
-              className='absolute z-10 h-3 w-3 -translate-x-1/2 -translate-y-1/2 bg-teal-600'
-              ref={bottomLeftBtnRef}
-              style={{ top: '100%', left: 0 }}
+              className='absolute top-full left-0 z-10 h-3 w-3 -translate-x-1/2 -translate-y-1/2 bg-teal-500'
+              onMouseDown={() => setDragging(DRAGGING_STATE.BOTTOM_LEFT)}
             />
             <button
-              className='absolute z-10 h-3 w-3 -translate-x-1/2 -translate-y-1/2  bg-teal-600'
-              ref={bottomRightBtnRef}
-              style={{ top: '100%', left: '100%' }}
+              className='absolute top-full left-full z-10 h-3 w-3 -translate-x-1/2 -translate-y-1/2  bg-teal-500'
+              onMouseDown={() => setDragging(DRAGGING_STATE.BOTTOM_RIGHT)}
             />
           </div>
         </div>
@@ -276,17 +256,13 @@ const CropPage = () => {
     h: 3643,
     ext: 'jpg',
   });
-  const [contentRef] = useAutoAnimate<HTMLDivElement>({
-    duration: 300,
-  });
   return (
     <Layout
       name='Crop'
       onUpload={(image) => setImage(image)}
       hasImage={image !== null}
-      contentRef={contentRef}
     >
-      {image && contentRef.current && <Editor image={image} />}
+      {image && <Editor image={image} />}
     </Layout>
   );
 };

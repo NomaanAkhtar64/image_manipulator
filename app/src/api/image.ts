@@ -16,8 +16,11 @@ const ImageAPI = {
     return res.data;
   },
   async crop(data: CropReq) {
-    console.log(data);
     const res = await axios.post(API_URL`image/crop`, data);
+    return res.data;
+  },
+  async slice(data: SliceReq) {
+    const res = await axios.post(API_URL`image/slice`, data);
     return res.data;
   },
 };

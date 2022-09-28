@@ -74,4 +74,32 @@ ImageRouter.post('/crop', express.json(), async (req, res) => {
   res.send(url);
 });
 
+interface SliceReq {
+  id: string;
+  ext: string;
+  top: number;
+  left: number;
+  width: number;
+  height: number;
+  rows: number;
+  columns: number;
+}
+
+ImageRouter.post('/slice', express.json(), async (req, res) => {
+  const { id, ext, width, height, left, top, rows, columns } =
+    req.body as SliceReq;
+  const relPath = await imglib.slice(
+    id,
+    ext,
+    width,
+    height,
+    left,
+    top,
+    rows,
+    columns
+  );
+  const url = `http://${req.hostname}:4000/${relPath}`;
+  res.send(url);
+});
+
 export { ImageRouter };

@@ -24,7 +24,7 @@ const Uploader: React.FC<UploaderProps> = ({ onUpload }) => {
 
   const onDrop = (
     files: FileList | null,
-    event: React.DragEvent<HTMLDivElement>
+    _: React.DragEvent<HTMLDivElement>
   ) => {
     setIsHoveringFile(false);
     if (!files) return;
@@ -40,7 +40,7 @@ const Uploader: React.FC<UploaderProps> = ({ onUpload }) => {
 
     ImageAPI.upload(file)
       .then((img) => onUpload(img))
-      .catch((err) => setError('Server Error'));
+      .catch((_) => setError('Server Error'));
 
     setError('');
   };
@@ -113,7 +113,7 @@ const Uploader: React.FC<UploaderProps> = ({ onUpload }) => {
           if (e.target.files && e.target.files.length > 0) {
             ImageAPI.upload(e.target.files[0])
               .then((img) => onUpload(img))
-              .catch((err) => setError('Server Error'));
+              .catch((_) => setError('Server Error'));
           }
         }}
         ref={fileInputRef}

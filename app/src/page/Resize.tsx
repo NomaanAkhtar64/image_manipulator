@@ -15,6 +15,7 @@ import { CloseLock } from '../icons/CloseLock';
 import { OpenLock } from '../icons/OpenLock';
 import { getDiagonalPercent } from '../utils/size';
 import { useWindowEvent } from '../hooks/window';
+import { DIGIT } from '../utils/regex';
 
 interface EditorProps {
   image: IMImage;
@@ -96,7 +97,7 @@ function Editor({ image }: EditorProps) {
         >
           <div className='absolute top-0 left-0 right-0 bottom-0 z-10'></div>
           <div
-            className='absolute top-0 left-0 right-0 bottom-0 -z-10'
+            className='absolute top-0 left-0 right-0 bottom-0 -z-10 '
             style={{
               width: max.width,
               height: max.height,
@@ -108,7 +109,7 @@ function Editor({ image }: EditorProps) {
             }}
           />
           <div
-            className='mt-auto outline outline-4 outline-teal-500 dark:outline-teal-900'
+            className='mt-auto outline outline-2 outline-teal-500'
             style={{
               width,
               height,
@@ -117,7 +118,7 @@ function Editor({ image }: EditorProps) {
             }}
           >
             <button
-              className='absolute z-10 h-3 w-3 -translate-x-1/2 -translate-y-1/2 bg-teal-600'
+              className='absolute z-10 h-3 w-3 -translate-x-1/2 -translate-y-1/2 bg-teal-500'
               ref={btnRef}
               style={{
                 left: width,
@@ -138,7 +139,7 @@ function Editor({ image }: EditorProps) {
             label='Width'
             value={actualWidth}
             onChange={(e) => {
-              let digitStr = e.target.value.replace(/[^0-9]/gi, '');
+              let digitStr = e.target.value.replace(DIGIT, '');
               let newActualWidth = Math.min(parseInt(digitStr || '0'), 1);
               let percent = newActualWidth / image.h;
               setWidthPercent(percent);
@@ -151,7 +152,7 @@ function Editor({ image }: EditorProps) {
             label='Height'
             value={actualHeight}
             onChange={(e) => {
-              let digitStr = e.target.value.replace(/[^0-9]/gi, '');
+              let digitStr = e.target.value.replace(DIGIT, '');
               let newActualHeight = Math.min(parseInt(digitStr || '0'), 1);
               let percent = newActualHeight / image.h;
               setHeightPercent(percent);
@@ -205,17 +206,13 @@ const ResizePage = () => {
     h: 3643,
     ext: 'jpg',
   });
-  const [contentRef] = useAutoAnimate<HTMLDivElement>({
-    duration: 300,
-  });
   return (
     <Layout
       name='Resize'
       onUpload={(image) => setImage(image)}
       hasImage={image !== null}
-      contentRef={contentRef}
     >
-      {image && contentRef.current && <Editor image={image} />}
+      {image && <Editor image={image} />}
     </Layout>
   );
 };

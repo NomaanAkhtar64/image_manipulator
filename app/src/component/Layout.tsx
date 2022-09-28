@@ -1,12 +1,13 @@
+import { useAutoAnimate } from '@formkit/auto-animate/react';
 import React from 'react';
 import ConditionalRender from './Render';
 import Uploader from './Uploader';
+
 interface LayoutProps {
   children?: JSX.Element | string | null;
   name: string;
   onUpload: (image: IMImage) => void;
   hasImage: boolean;
-  contentRef: React.RefObject<HTMLDivElement>;
 }
 
 const Layout: React.FC<LayoutProps> = ({
@@ -14,8 +15,10 @@ const Layout: React.FC<LayoutProps> = ({
   name,
   onUpload,
   hasImage,
-  contentRef,
 }) => {
+  const [contentRef] = useAutoAnimate<HTMLDivElement>({
+    duration: 300,
+  });
   return (
     <div className='w flex h-full w-full items-start justify-center overflow-hidden lg:items-center lg:px-10'>
       <div

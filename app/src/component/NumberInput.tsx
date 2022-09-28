@@ -12,7 +12,7 @@ const NumberInput: React.FC<NumberInputProps> = ({
   onChange,
 }) => {
   return (
-    <div className='flex w-full flex-row items-center justify-between'>
+    <div className='flex w-full flex-row items-center  justify-between'>
       <label className='font-bold uppercase'>{label}</label>
       <input
         type='text'
