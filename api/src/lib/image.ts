@@ -2,16 +2,13 @@ import sharp from 'sharp';
 import { zip } from 'zip-a-folder';
 import path from 'path';
 import { mkdirSync, existsSync, rmSync } from 'fs';
+import { ColorReq, CropReq, ResizeReq, SliceReq } from '../types/data';
+
 export async function getMetaData(id: string, ext: string) {
   return await sharp(`media/images/upload/${id}.${ext}`).metadata();
 }
 
-export async function resize(
-  id: string,
-  ext: string,
-  width: number,
-  height: number
-) {
+export async function resize({ id, ext, width, height }: ResizeReq) {
   const relPath = `images/download/${id}_resize.${ext}`;
   await sharp(`media/images/upload/${id}.${ext}`)
     .resize(width, height, {
@@ -22,14 +19,7 @@ export async function resize(
   return relPath;
 }
 
-export async function crop(
-  id: string,
-  ext: string,
-  width: number,
-  height: number,
-  left: number,
-  top: number
-) {
+export async function crop({ id, ext, top, left, width, height }: CropReq) {
   const relPath = `images/download/${id}_crop.${ext}`;
   await sharp(`media/images/upload/${id}.${ext}`)
     .extract({
@@ -43,16 +33,16 @@ export async function crop(
   return relPath;
 }
 
-export async function slice(
-  id: string,
-  ext: string,
-  width: number,
-  height: number,
-  left: number,
-  top: number,
-  rows: number,
-  columns: number
-) {
+export async function slice({
+  id,
+  ext,
+  top,
+  left,
+  width,
+  height,
+  rows,
+  columns,
+}: SliceReq) {
   const zipPath = `images/download/${id}_slice.zip`;
   const folderPath = path.join(
     __dirname,
@@ -88,4 +78,24 @@ export async function slice(
   rmSync(folderPath, { recursive: true, force: true });
 
   return zipPath;
+}
+
+export async function color({
+  id,
+  ext,
+  brightness,
+  greyscale,
+  hue,
+  contrast,
+  saturation,
+}: ColorReq) {
+  const relPath = `images/download/${id}_color.${ext}`;
+
+  await sharp(`media/images/upload/${id}.${ext}`)
+    .greyscale(greyscale)
+    .linear(contrast, -(128 * contrast) + 128)
+    .modulate({ brightness, saturation, hue })
+    .toFile(`media/${relPath}`);
+
+  return relPath;
 }

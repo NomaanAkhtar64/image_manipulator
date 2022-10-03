@@ -109,7 +109,7 @@ function Editor({ image }: EditorProps) {
             }}
           />
           <div
-            className='mt-auto outline outline-2 outline-teal-500'
+            className='mt-auto  outline outline-2 outline-teal-500'
             style={{
               width,
               height,
@@ -138,10 +138,8 @@ function Editor({ image }: EditorProps) {
           <NumberInput
             label='Width'
             value={actualWidth}
-            onChange={(e) => {
-              let digitStr = e.target.value.replace(DIGIT, '');
-              let newActualWidth = Math.min(parseInt(digitStr || '0'), 1);
-              let percent = newActualWidth / image.h;
+            onChange={(v) => {
+              let percent = Math.min(v, 1) / image.h;
               setWidthPercent(percent);
               if (isLocked) {
                 setHeightPercent(percent);
@@ -151,10 +149,8 @@ function Editor({ image }: EditorProps) {
           <NumberInput
             label='Height'
             value={actualHeight}
-            onChange={(e) => {
-              let digitStr = e.target.value.replace(DIGIT, '');
-              let newActualHeight = Math.min(parseInt(digitStr || '0'), 1);
-              let percent = newActualHeight / image.h;
+            onChange={(v) => {
+              let percent = Math.min(v, 1) / image.h;
               setHeightPercent(percent);
               if (isLocked) {
                 setWidthPercent(percent);
@@ -175,14 +171,13 @@ function Editor({ image }: EditorProps) {
           />
           <button
             onClick={async () => {
-              const resizedURL = await ImageAPI.resize({
-                id: image.id,
-                ext: image.ext,
-                width: actualWidth,
-                height: actualHeight,
-              });
               if (downloaderRef.current) {
-                downloaderRef.current.href = resizedURL;
+                downloaderRef.current.href = await ImageAPI.use('resize', {
+                  id: image.id,
+                  ext: image.ext,
+                  width: actualWidth,
+                  height: actualHeight,
+                });
                 downloaderRef.current.click();
               }
             }}

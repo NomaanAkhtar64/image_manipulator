@@ -7,7 +7,6 @@ import { useViewerMaxSize } from '../hooks/viewer';
 import { useWindowEvent } from '../hooks/window';
 import { CloseLock } from '../icons/CloseLock';
 import { OpenLock } from '../icons/OpenLock';
-import { DIGIT } from '../utils/regex';
 
 interface EditorProps {
   image: IMImage;
@@ -187,43 +186,27 @@ function Editor({ image }: EditorProps) {
             <NumberInput
               label='Rows'
               value={nRow}
-              onChange={(e) => {
-                let digitStr = e.target.value.replace(DIGIT, '');
-                setNRow(parseInt(digitStr || '1'));
-              }}
+              onChange={(rcount) => setNRow(rcount)}
             />
             <NumberInput
               label='Columns'
               value={nColumn}
-              onChange={(e) => {
-                let digitStr = e.target.value.replace(DIGIT, '');
-                setNColumn(parseInt(digitStr || '1'));
-              }}
+              onChange={(ccount) => setNColumn(ccount)}
             />
             <NumberInput
               label='X'
               value={actualLeft}
-              onChange={(e) => {
-                let digitStr = e.target.value.replace(DIGIT, '');
-                let actLeft = parseInt(digitStr || '0');
-                setX1(Math.min(actLeft / image.w, 1));
-              }}
+              onChange={(actLeft) => setX1(Math.min(actLeft / image.w, 1))}
             />
             <NumberInput
               label='Y'
               value={actualTop}
-              onChange={(e) => {
-                let digitStr = e.target.value.replace(DIGIT, '');
-                let actRight = parseInt(digitStr || '0');
-                setY1(Math.min(actRight / image.h, 1));
-              }}
+              onChange={(actRight) => setY1(Math.min(actRight / image.h, 1))}
             />
             <NumberInput
               label='Width'
               value={actualWidth}
-              onChange={(e) => {
-                let digitStr = e.target.value.replace(DIGIT, '');
-                let actWidth = parseInt(digitStr || '0');
+              onChange={(actWidth) => {
                 let newX2 = actWidth + x1 * image.w;
                 setX2(Math.min(newX2 / image.w, 1));
               }}
@@ -231,9 +214,7 @@ function Editor({ image }: EditorProps) {
             <NumberInput
               label='Height'
               value={actualHeight}
-              onChange={(e) => {
-                let digitStr = e.target.value.replace(DIGIT, '');
-                let actHeight = parseInt(digitStr || '0');
+              onChange={(actHeight) => {
                 let newY2 = actHeight + y1 * image.h;
                 setY2(Math.min(newY2 / image.w, 1));
               }}
@@ -254,18 +235,17 @@ function Editor({ image }: EditorProps) {
           />
           <button
             onClick={async () => {
-              const resizedURL = await ImageAPI.slice({
-                id: image.id,
-                ext: image.ext,
-                width: actualWidth,
-                height: actualHeight,
-                left: actualLeft,
-                top: actualTop,
-                columns: nColumn,
-                rows: nRow,
-              });
               if (downloaderRef.current) {
-                downloaderRef.current.href = resizedURL;
+                downloaderRef.current.href = await ImageAPI.use('slice', {
+                  id: image.id,
+                  ext: image.ext,
+                  width: actualWidth,
+                  height: actualHeight,
+                  left: actualLeft,
+                  top: actualTop,
+                  columns: nColumn,
+                  rows: nRow,
+                });
                 downloaderRef.current.click();
               }
             }}

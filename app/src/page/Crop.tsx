@@ -174,27 +174,17 @@ function Editor({ image }: EditorProps) {
           <NumberInput
             label='X'
             value={actualLeft}
-            onChange={(e) => {
-              let digitStr = e.target.value.replace(DIGIT, '');
-              let actLeft = parseInt(digitStr || '0');
-              setX1(Math.min(actLeft / image.w, 1));
-            }}
+            onChange={(actLeft) => setX1(Math.min(actLeft / image.w, 1))}
           />
           <NumberInput
             label='Y'
             value={actualTop}
-            onChange={(e) => {
-              let digitStr = e.target.value.replace(DIGIT, '');
-              let actRight = parseInt(digitStr || '0');
-              setY1(Math.min(actRight / image.h, 1));
-            }}
+            onChange={(actRight) => setY1(Math.min(actRight / image.h, 1))}
           />
           <NumberInput
             label='Width'
             value={actualWidth}
-            onChange={(e) => {
-              let digitStr = e.target.value.replace(DIGIT, '');
-              let actWidth = parseInt(digitStr || '0');
+            onChange={(actWidth) => {
               let newX2 = actWidth + x1 * image.w;
               setX2(Math.min(newX2 / image.w, 1));
             }}
@@ -202,9 +192,7 @@ function Editor({ image }: EditorProps) {
           <NumberInput
             label='Height'
             value={actualHeight}
-            onChange={(e) => {
-              let digitStr = e.target.value.replace(DIGIT, '');
-              let actHeight = parseInt(digitStr || '0');
+            onChange={(actHeight) => {
               let newY2 = actHeight + y1 * image.h;
               setY2(Math.min(newY2 / image.w, 1));
             }}
@@ -224,16 +212,15 @@ function Editor({ image }: EditorProps) {
           />
           <button
             onClick={async () => {
-              const resizedURL = await ImageAPI.crop({
-                id: image.id,
-                ext: image.ext,
-                width: actualWidth,
-                height: actualHeight,
-                left: actualLeft,
-                top: actualTop,
-              });
               if (downloaderRef.current) {
-                downloaderRef.current.href = resizedURL;
+                downloaderRef.current.href = await ImageAPI.use('crop', {
+                  id: image.id,
+                  ext: image.ext,
+                  width: actualWidth,
+                  height: actualHeight,
+                  left: actualLeft,
+                  top: actualTop,
+                });
                 downloaderRef.current.click();
               }
             }}

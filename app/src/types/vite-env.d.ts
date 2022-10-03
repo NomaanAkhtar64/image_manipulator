@@ -40,6 +40,15 @@ interface SliceReq {
   rows: number;
   columns: number;
 }
+interface ColorReq {
+  id: string;
+  ext: string;
+  greyscale: boolean;
+  saturation: number;
+  brightness: number;
+  contrast: number;
+  hue: number;
+}
 
 type Dict<T> = {
   [key: string]: T;

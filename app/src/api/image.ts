@@ -1,6 +1,14 @@
 import axios from 'axios';
-import { API_URL } from '../const';
+import { API_URL, API_URL_FN } from '../const';
 import { CLIENT_ID } from '../main';
+
+type ImageAPIs = 'resize' | 'crop' | 'slice' | 'color';
+interface ImageAPIParams {
+  resize: ResizeReq;
+  crop: CropReq;
+  slice: SliceReq;
+  color: ColorReq;
+}
 
 const ImageAPI = {
   async upload(file: File) {
@@ -11,16 +19,8 @@ const ImageAPI = {
     const response = await axios.post<IMImage>(API_URL`image/upload`, formData);
     return response.data;
   },
-  async resize(data: ResizeReq) {
-    const res = await axios.post(API_URL`image/resize`, data);
-    return res.data;
-  },
-  async crop(data: CropReq) {
-    const res = await axios.post(API_URL`image/crop`, data);
-    return res.data;
-  },
-  async slice(data: SliceReq) {
-    const res = await axios.post(API_URL`image/slice`, data);
+  async use<T extends ImageAPIs>(action: T, data: ImageAPIParams[T]) {
+    const res = await axios.post(API_URL_FN(`image/${action}`), data);
     return res.data;
   },
 };

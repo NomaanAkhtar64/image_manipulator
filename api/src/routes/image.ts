@@ -3,6 +3,8 @@ import bodyParser from 'body-parser';
 import { imageUploader } from '../file';
 import { ERROR } from '../errors';
 import * as imglib from '../lib/image';
+import { ColorReq, CropReq, ResizeReq, SliceReq } from '../types/data';
+
 const ImageRouter = express.Router();
 
 ImageRouter.post(
@@ -44,51 +46,24 @@ ImageRouter.post(
   }
 );
 
-interface ResizeReq {
-  id: string;
-  ext: string;
-  width: number;
-  height: number;
-}
-
 ImageRouter.post('/resize', express.json(), async (req, res) => {
   const { id, ext, width, height } = req.body as ResizeReq;
-  const relPath = await imglib.resize(id, ext, width, height);
+  const relPath = await imglib.resize({ id, ext, width, height });
   const url = `http://${req.hostname}:4000/${relPath}`;
   res.send(url);
 });
-
-interface CropReq {
-  id: string;
-  ext: string;
-  width: number;
-  height: number;
-  left: number;
-  top: number;
-}
 
 ImageRouter.post('/crop', express.json(), async (req, res) => {
   const { id, ext, width, height, left, top } = req.body as CropReq;
-  const relPath = await imglib.crop(id, ext, width, height, left, top);
+  const relPath = await imglib.crop({ id, ext, width, height, left, top });
   const url = `http://${req.hostname}:4000/${relPath}`;
   res.send(url);
 });
-
-interface SliceReq {
-  id: string;
-  ext: string;
-  top: number;
-  left: number;
-  width: number;
-  height: number;
-  rows: number;
-  columns: number;
-}
 
 ImageRouter.post('/slice', express.json(), async (req, res) => {
   const { id, ext, width, height, left, top, rows, columns } =
     req.body as SliceReq;
-  const relPath = await imglib.slice(
+  const relPath = await imglib.slice({
     id,
     ext,
     width,
@@ -96,8 +71,24 @@ ImageRouter.post('/slice', express.json(), async (req, res) => {
     left,
     top,
     rows,
-    columns
-  );
+    columns,
+  });
+  const url = `http://${req.hostname}:4000/${relPath}`;
+  res.send(url);
+});
+
+ImageRouter.post('/color', express.json(), async (req, res) => {
+  const { id, ext, brightness, greyscale, hue, saturation, contrast } =
+    req.body as ColorReq;
+  const relPath = await imglib.color({
+    id,
+    ext,
+    brightness,
+    greyscale,
+    hue,
+    saturation,
+    contrast,
+  });
   const url = `http://${req.hostname}:4000/${relPath}`;
   res.send(url);
 });

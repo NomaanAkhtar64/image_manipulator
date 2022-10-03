@@ -86,7 +86,11 @@ const Menu = () => {
             <button
               onClick={() => navigate(service.path)}
               className={conditionalStyle(
-                'rounded-2xl',
+                conditionalStyle(
+                  'rounded-2xl',
+                  location.pathname === service.path,
+                  'active'
+                ),
                 isHome,
                 'bg-zinc-200 p-8 dark:bg-zinc-800',
                 'bg-transparent p-5 '

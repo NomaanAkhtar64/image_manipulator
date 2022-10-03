@@ -6,6 +6,7 @@ import { useAutoAnimate } from '@formkit/auto-animate/react';
 import CropPage from './page/Crop';
 import SlicePage from './page/Slice';
 import ColorPage from './page/Color';
+import SwitchInput from './component/SwitchInput';
 function App() {
   const location = useLocation();
   const [parent] = useAutoAnimate<HTMLDivElement>({
@@ -26,7 +27,7 @@ function App() {
     >
       <Menu />
       <Routes>
-        <Route path='' element={<></>} />
+        <Route path='' />
         <Route path='/resize' element={<ResizePage />} />
         <Route path='/crop' element={<CropPage />} />
         <Route path='/slice' element={<SlicePage />} />
