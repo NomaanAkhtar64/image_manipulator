@@ -260,14 +260,7 @@ function Editor({ image }: EditorProps) {
   );
 }
 const SlicePage = () => {
-  const [image, setImage] = useState<IMImage | null>({
-    id: '257cc6fca478493ca4afb9e1abecae40',
-    client: 'cc9a538a-9567-4342-b94c-bb7a34a9f68b',
-    url: `http://${location.hostname}:4000/images/upload/257cc6fca478493ca4afb9e1abecae40.jpg`,
-    w: 5464,
-    h: 3643,
-    ext: 'jpg',
-  });
+  const [image, setImage] = useState<IMImage | null>(null);
   return (
     <Layout
       name='Slice'
@@ -280,4 +273,3 @@ const SlicePage = () => {
 };
 
 export default SlicePage;
-
