@@ -41,7 +41,7 @@ Start the server
 
 Server runs at [localhost](http://localhost:5173)
 
-## Known Issues
+## Issues
 
 - Color feature downloaded image differs from previewed image when contrast is changed.
 - Text Input malfunctioning in Resize
