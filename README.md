@@ -4,9 +4,9 @@ Easily manipulate image with this utility.
 
 ## Technologies
 
-![React](resources/icon/react.svg)
-![Sharp](resources/icon/sharp.svg)
-![Express](resources/icon/express.png)
+<img src="resources/icon/react.svg"  width="64" height="64">
+<img src="resources/icon/sharp.svg"  width="64" height="64">
+<img src="resources/icon/express.png"  width="64" height="64">
 
 ## Features
 
