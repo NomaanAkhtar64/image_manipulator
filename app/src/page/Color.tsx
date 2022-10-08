@@ -19,7 +19,7 @@ function Editor({ image }: EditorProps) {
   const [saturation, setSaturation] = useState(1);
   const [contrast, setContrast] = useState(1);
 
-  let filter = `saturate(${saturation}) contrast(${contrast}) brightness(${brightness}) hue-rotate(${hue}deg)`;
+  let filter = `contrast(${contrast}) saturate(${saturation}) brightness(${brightness}) hue-rotate(${hue}deg)`;
   if (greyscale) filter += 'grayscale(100%)';
 
   return (
@@ -33,19 +33,20 @@ function Editor({ image }: EditorProps) {
           }}
           ref={bgRef}
         >
-          <div
-            className='absolute top-0 left-0 right-0 bottom-0 -z-10 outline outline-2 outline-teal-500'
-            style={{
-              width: max.width,
-              height: max.height,
-              overflow: 'hidden',
-              background: `url("${image.url}")`,
-              transition: 'filter 200ms ease-in-out',
-              WebkitFilter: filter,
-              filter: filter,
-              backgroundSize: `${max.width}px ${max.height}px`,
-            }}
-          />
+          <div className='absolute top-0 left-0 right-0 bottom-0 -z-10 outline outline-2 outline-teal-500'>
+            <div
+              style={{
+                width: max.width,
+                height: max.height,
+                overflow: 'hidden',
+                background: `url("${image.url}")`,
+                transition: 'filter 200ms ease-in-out',
+                WebkitFilter: filter,
+                filter: filter,
+                backgroundSize: `${max.width}px ${max.height}px`,
+              }}
+            />
+          </div>
         </div>
 
         <div
@@ -70,7 +71,7 @@ function Editor({ image }: EditorProps) {
             <RangeInput
               label='Hue'
               value={hue}
-              onChange={(v) => setHue(v)}
+              onChange={(v) => setHue(Math.round(v))}
               scaleFactor={1 / 1.8}
               sliderMax={200}
               defaultVal={0}
@@ -98,7 +99,7 @@ function Editor({ image }: EditorProps) {
                   ext: image.ext,
                   greyscale,
                   brightness,
-                  hue: Math.round(hue),
+                  hue,
                   contrast,
                   saturation,
                 });
@@ -129,4 +130,3 @@ const ColorPage = () => {
 };
 
 export default ColorPage;
-
