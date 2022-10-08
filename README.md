@@ -4,14 +4,9 @@ Easily manipulate image with this utility.
 
 ## Technologies
 
-### Frontend
-
-- React ![React](resources/icon/react.svg)
-
-### Backend API
-
-- Sharp ![Sharp](resources/icon/sharp.svg)
-- Express ![Express](resources/icon/express.png)
+![React](resources/icon/react.svg)
+![Sharp](resources/icon/sharp.svg)
+![Express](resources/icon/express.png)
 
 ## Features
 
