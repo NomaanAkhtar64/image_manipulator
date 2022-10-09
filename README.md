@@ -44,5 +44,4 @@ Server runs at [localhost](http://localhost:5173)
 ## Issues
 
 - Color feature downloaded image differs from previewed image when contrast is changed.
-- Text Input malfunctioning in Resize
 - Unexpected behaviour of crop,slice when locked
