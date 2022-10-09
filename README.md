@@ -21,7 +21,8 @@ Easily manipulate image with this utility.
 
 ## Demo
 
-Insert gif or link to demo
+<img src="https://github.com/NomaanAkhtar64/NomaanAkhtar64/blob/main/resources/demo/image_manipulator/0.png" alt="Home Screen"  width="128" ><img src="https://github.com/NomaanAkhtar64/NomaanAkhtar64/blob/main/resources/demo/image_manipulator/1.png" alt="Home Screen"  width="128" >
+<img src="https://github.com/NomaanAkhtar64/NomaanAkhtar64/blob/main/resources/demo/image_manipulator/2.png" alt="Home Screen"  width="128" ><img src="https://github.com/NomaanAkhtar64/NomaanAkhtar64/blob/main/resources/demo/image_manipulator/3.png" alt="Home Screen"  width="128" >
 
 ## Run Locally
 
