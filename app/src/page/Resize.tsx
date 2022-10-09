@@ -22,15 +22,20 @@ interface EditorProps {
 }
 
 function Editor({ image }: EditorProps) {
-  const [widthPercent, setWidthPercent] = useState(1); // percent
-  const [heightPercent, setHeightPercent] = useState(1); // percent
+  // const [widthPercent, setWidthPercent] = useState(1); // percent
+  const [actualWidth, setActualWidth] = useState(image.w);
+  const [actualHeight, setActualHeight] = useState(image.h);
+  // const [heightPercent, setHeightPercent] = useState(1); // percent
   const max = useViewerMaxSize(image); // maximum size of viewer (not the actual image)
+
+  const widthPercent = actualWidth / image.w;
+  const heightPercent = actualHeight / image.h;
 
   const width = Math.round(widthPercent * max.width); // maximum image size of selected region in viewer
   const height = Math.round(heightPercent * max.height);
 
-  const actualWidth = Math.round(image.w * widthPercent); // actual size: ;
-  const actualHeight = Math.round(image.h * heightPercent);
+  // const actualWidth = Math.round(image.w * widthPercent); // actual size: ;
+  // const actualHeight = Math.round(image.h * heightPercent);
 
   const downloaderRef = useRef<HTMLAnchorElement>(null);
   const bgRef = useRef<HTMLDivElement>(null);
@@ -57,11 +62,11 @@ function Editor({ image }: EditorProps) {
 
     if (isLocked) {
       const percent = Math.min(wpercent, hpercent);
-      setWidthPercent(percent);
-      setHeightPercent(percent);
+      setActualWidth(Math.round(percent * image.w));
+      setActualHeight(Math.round(percent * image.h));
     } else {
-      setWidthPercent(wpercent);
-      setHeightPercent(hpercent);
+      setActualWidth(Math.round(wpercent * image.w));
+      setActualHeight(Math.round(hpercent * image.h));
     }
   };
 
@@ -139,10 +144,11 @@ function Editor({ image }: EditorProps) {
             label='Width'
             value={actualWidth}
             onChange={(v) => {
-              let percent = Math.min(v, 1) / image.h;
-              setWidthPercent(percent);
+              let w = Math.min(v, image.w);
+              setActualWidth(w);
               if (isLocked) {
-                setHeightPercent(percent);
+                let percent = w / image.w;
+                setActualHeight(Math.round(percent * image.h));
               }
             }}
           />
@@ -150,10 +156,11 @@ function Editor({ image }: EditorProps) {
             label='Height'
             value={actualHeight}
             onChange={(v) => {
-              let percent = Math.min(v, 1) / image.h;
-              setHeightPercent(percent);
+              let h = Math.min(v, image.h);
+              setActualHeight(h);
               if (isLocked) {
-                setWidthPercent(percent);
+                let percent = h / image.h;
+                setActualWidth(Math.round(percent * image.w));
               }
             }}
           />
@@ -162,7 +169,7 @@ function Editor({ image }: EditorProps) {
             onClick={() => {
               if (!isLocked) {
                 let percent = width / max.width;
-                setHeightPercent(percent);
+                setActualHeight(Math.round(percent * image.h));
               }
               setIsLocked(!isLocked);
             }}

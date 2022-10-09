@@ -57,7 +57,9 @@ function Editor({ image }: EditorProps) {
     switch (dragging) {
       case DRAGGING_STATE.TOP_LEFT:
         nX1 = Math.min(Math.max(pageX - left, 0), max.width) / max.width;
+        nX1 = Math.min(nX1, x2);
         nY1 = Math.min(Math.max(pageY - top, 0), max.height) / max.height;
+        nY1 = Math.min(nY1, y2);
         if (isLocked) {
           let percent = Math.min(x2 - nX1, y2 - nY1);
           setX2(nX1 + percent);
@@ -68,7 +70,9 @@ function Editor({ image }: EditorProps) {
         break;
       case DRAGGING_STATE.TOP_RIGHT:
         nX2 = Math.min(Math.max(pageX - left, 0), max.width) / max.width;
+        nX2 = Math.max(nX2, x1);
         nY1 = Math.min(Math.max(pageY - top, 0), max.height) / max.height;
+        nY1 = Math.min(nY1, y2);
         if (isLocked) {
           let percent = Math.min(nX2 - x1, y2 - nY1);
           nX2 = x1 + percent;
@@ -79,7 +83,9 @@ function Editor({ image }: EditorProps) {
         break;
       case DRAGGING_STATE.BOTTOM_LEFT:
         nX1 = Math.min(Math.max(pageX - left, 0), max.width) / max.width;
+        nX1 = Math.min(nX1, x2);
         nY2 = Math.min(Math.max(pageY - top, 0), max.height) / max.height;
+        nY2 = Math.max(nY2, y1);
         if (isLocked) {
           let percent = Math.min(x2 - nX1, nY2 - y1);
           setX2(nX1 + percent);
@@ -90,7 +96,9 @@ function Editor({ image }: EditorProps) {
         break;
       case DRAGGING_STATE.BOTTOM_RIGHT:
         nX2 = Math.min(Math.max(pageX - left, 0), max.width) / max.width;
+        nX2 = Math.max(nX2, x1);
         nY2 = Math.min(Math.max(pageY - top, 0), max.height) / max.height;
+        nY2 = Math.max(nY2, y1);
         if (isLocked) {
           let percent = Math.min(nX2 - x1, nY2 - y1);
           nX2 = percent + x1;
