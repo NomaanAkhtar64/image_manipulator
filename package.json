@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "dev": "concurrently \"cd api && npm run dev\" \"cd app && npm run dev\" ",
-    "postinstall": "concurrently \"cd api && npm install\" \"cd app && npm install\" "
+    "postinstall": "concurrently \"cd api && npm install\" \"cd app && npm install\" ",
+    "build": "cd app && npm run build",
+    "start": "cd api && npm run start"
   },
   "author": "Nomaan Akhtar",
   "license": "ISC",
