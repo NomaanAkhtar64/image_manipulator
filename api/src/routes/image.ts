@@ -1,16 +1,16 @@
-import express from 'express';
-import bodyParser from 'body-parser';
-import { imageUploader } from '../file';
-import { ERROR } from '../errors';
-import * as imglib from '../lib/image';
-import { ColorReq, CropReq, ResizeReq, SliceReq } from '../types/data';
+import express from "express";
+import bodyParser from "body-parser";
+import { imageUploader } from "../file";
+import { ERROR } from "../errors";
+import * as imglib from "../lib/image";
+import { ColorReq, CropReq, ResizeReq, SliceReq } from "../types/data";
 
 const ImageRouter = express.Router();
 
 ImageRouter.post(
-  '/upload',
+  "/upload",
   bodyParser.urlencoded({ extended: false }),
-  imageUploader.single('image'),
+  imageUploader.single("image"),
   async (req, res) => {
     let errors: string[] = [];
     if (!req.body.client) errors.push(ERROR.UPLOAD.CLIENT);
@@ -24,12 +24,12 @@ ImageRouter.post(
     const image = req.file as Express.Multer.File;
     const { client } = req.body;
 
-    const [id, ext] = image.filename.split('.');
+    const [id, ext] = image.filename.split(".");
 
     try {
       const metadata = await imglib.getMetaData(id, ext);
       if (!metadata.width || !metadata.height) {
-        return res.json('Image is corrupt!');
+        return res.json("Image is corrupt!");
       }
       return res.json({
         id,
@@ -40,27 +40,27 @@ ImageRouter.post(
         ext,
       });
     } catch (err) {
-      res.json('SERVER: sharp malfunction!');
+      res.json("SERVER: sharp malfunction!");
       return;
     }
   }
 );
 
-ImageRouter.post('/resize', express.json(), async (req, res) => {
+ImageRouter.post("/resize", express.json(), async (req, res) => {
   const { id, ext, width, height } = req.body as ResizeReq;
   const relPath = await imglib.resize({ id, ext, width, height });
   const url = `http://${req.hostname}:4000/${relPath}`;
   res.send(url);
 });
 
-ImageRouter.post('/crop', express.json(), async (req, res) => {
+ImageRouter.post("/crop", express.json(), async (req, res) => {
   const { id, ext, width, height, left, top } = req.body as CropReq;
   const relPath = await imglib.crop({ id, ext, width, height, left, top });
   const url = `http://${req.hostname}:4000/${relPath}`;
   res.send(url);
 });
 
-ImageRouter.post('/slice', express.json(), async (req, res) => {
+ImageRouter.post("/slice", express.json(), async (req, res) => {
   const { id, ext, width, height, left, top, rows, columns } =
     req.body as SliceReq;
   const relPath = await imglib.slice({
@@ -77,7 +77,7 @@ ImageRouter.post('/slice', express.json(), async (req, res) => {
   res.send(url);
 });
 
-ImageRouter.post('/color', express.json(), async (req, res) => {
+ImageRouter.post("/color", express.json(), async (req, res) => {
   const { id, ext, brightness, greyscale, hue, saturation, contrast } =
     req.body as ColorReq;
   const relPath = await imglib.color({

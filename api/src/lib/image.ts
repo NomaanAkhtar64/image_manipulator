@@ -1,8 +1,8 @@
-import sharp from 'sharp';
-import { zip } from 'zip-a-folder';
-import path from 'path';
-import { mkdirSync, existsSync, rmSync } from 'fs';
-import { ColorReq, CropReq, ResizeReq, SliceReq } from '../types/data';
+import sharp from "sharp";
+import { zip } from "zip-a-folder";
+import path from "path";
+import { mkdirSync, existsSync, rmSync } from "fs";
+import { ColorReq, CropReq, ResizeReq, SliceReq } from "../types/data";
 
 export async function getMetaData(id: string, ext: string) {
   return await sharp(`media/images/upload/${id}.${ext}`).metadata();
@@ -12,7 +12,7 @@ export async function resize({ id, ext, width, height }: ResizeReq) {
   const relPath = `images/download/${id}_resize.${ext}`;
   await sharp(`media/images/upload/${id}.${ext}`)
     .resize(width, height, {
-      fit: 'fill',
+      fit: "fill",
     })
     .toFile(`media/${relPath}`);
 
@@ -46,12 +46,12 @@ export async function slice({
   const zipPath = `images/download/${id}_slice.zip`;
   const folderPath = path.join(
     __dirname,
-    '..',
-    '..',
-    'media',
-    'images',
-    'download',
-    'slice',
+    "..",
+    "..",
+    "media",
+    "images",
+    "download",
+    "slice",
     id
   );
 
@@ -70,11 +70,12 @@ export async function slice({
           left: left + r * sliceWidth,
           top: top + c * sliceHeight,
         })
+        .resize({ width: sliceWidth, height: sliceHeight })
         .toFile(p);
     }
   }
 
-  await zip(folderPath, path.join('media', zipPath));
+  await zip(folderPath, path.join("media", zipPath));
   rmSync(folderPath, { recursive: true, force: true });
 
   return zipPath;
