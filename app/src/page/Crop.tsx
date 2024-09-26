@@ -1,14 +1,14 @@
-import { useAutoAnimate } from '@formkit/auto-animate/react';
-import { useLayoutEffect, useRef, useState } from 'react';
-import { ImageAPI } from '../api/image';
-import Layout from '../component/Layout';
-import NumberInput from '../component/NumberInput';
-import TriggerInput from '../component/TriggerInput';
-import { useViewerMaxSize } from '../hooks/viewer';
-import { useWindowEvent } from '../hooks/window';
-import { CloseLock } from '../icons/CloseLock';
-import { OpenLock } from '../icons/OpenLock';
-import { DIGIT } from '../utils/regex';
+import { useAutoAnimate } from "@formkit/auto-animate/react";
+import { useLayoutEffect, useRef, useState } from "react";
+import { ImageAPI } from "../api/image";
+import Layout from "../component/Layout";
+import NumberInput from "../component/NumberInput";
+import TriggerInput from "../component/TriggerInput";
+import { useViewerMaxSize } from "../hooks/viewer";
+import { useWindowEvent } from "../hooks/window";
+import { CloseLock } from "../icons/CloseLock";
+import { OpenLock } from "../icons/OpenLock";
+import { DIGIT } from "../utils/regex";
 
 interface EditorProps {
   image: IMImage;
@@ -106,12 +106,12 @@ function Editor({ image }: EditorProps) {
     }
   };
 
-  useWindowEvent('mouseup', () => {
+  useWindowEvent("mouseup", () => {
     setDragging(DRAGGING_STATE.NONE);
   });
 
   useWindowEvent(
-    'mousemove',
+    "mousemove",
     ({ pageX, pageY }) => {
       if (dragging !== DRAGGING_STATE.NONE) {
         scaleImageFromUIEvent(pageX, pageY);
@@ -121,76 +121,76 @@ function Editor({ image }: EditorProps) {
   );
 
   return (
-    <div className='flex w-full justify-center py-4'>
-      <div className='z-10 flex flex-col  lg:flex-row'>
+    <div className="flex w-full justify-center py-4">
+      <div className="z-10 flex flex-col  lg:flex-row">
         <div
-          className='relative flex'
+          className="relative flex"
           style={{
             minWidth: max.width,
             minHeight: max.height,
           }}
           ref={bgRef}
         >
-          <div className='absolute top-0 left-0 right-0 bottom-0 z-10'></div>
+          <div className="absolute bottom-0 left-0 right-0 top-0 z-10"></div>
           <div
-            className='absolute top-0 left-0 right-0 bottom-0 -z-10'
+            className="absolute bottom-0 left-0 right-0 top-0 -z-10"
             style={{
               width: max.width,
               height: max.height,
-              overflow: 'hidden',
-              background: `url("${image.url}")`,
-              WebkitFilter: 'blur(8px)',
-              filter: 'blur(8px)',
+              overflow: "hidden",
+              background: `url("${image.base64}")`,
+              WebkitFilter: "blur(8px)",
+              filter: "blur(8px)",
               backgroundSize: `${max.width}px ${max.height}px`,
             }}
           />
           <div
-            className='absolute  outline outline-2 outline-teal-500'
+            className="absolute  outline outline-2 outline-teal-500"
             style={{
               ...style,
-              background: `url("${image.url}")`,
+              background: `url("${image.base64}")`,
               backgroundSize: `${max.width}px ${max.height}px`,
               backgroundPosition: `-${style.left}px -${style.top}px`,
             }}
           >
             <button
-              className='absolute top-0 left-0 z-10 h-3 w-3 -translate-x-1/2 -translate-y-1/2  bg-teal-500'
+              className="absolute left-0 top-0 z-10 h-3 w-3 -translate-x-1/2 -translate-y-1/2  bg-teal-500"
               onMouseDown={() => setDragging(DRAGGING_STATE.TOP_LEFT)}
             />
             <button
-              className='absolute top-0 left-full z-10 h-3 w-3  -translate-x-1/2 -translate-y-1/2  bg-teal-500'
+              className="absolute left-full top-0 z-10 h-3 w-3  -translate-x-1/2 -translate-y-1/2  bg-teal-500"
               onMouseDown={() => setDragging(DRAGGING_STATE.TOP_RIGHT)}
             />
             <button
-              className='absolute top-full left-0 z-10 h-3 w-3 -translate-x-1/2 -translate-y-1/2 bg-teal-500'
+              className="absolute left-0 top-full z-10 h-3 w-3 -translate-x-1/2 -translate-y-1/2 bg-teal-500"
               onMouseDown={() => setDragging(DRAGGING_STATE.BOTTOM_LEFT)}
             />
             <button
-              className='absolute top-full left-full z-10 h-3 w-3 -translate-x-1/2 -translate-y-1/2  bg-teal-500'
+              className="absolute left-full top-full z-10 h-3 w-3 -translate-x-1/2 -translate-y-1/2  bg-teal-500"
               onMouseDown={() => setDragging(DRAGGING_STATE.BOTTOM_RIGHT)}
             />
           </div>
         </div>
 
         <div
-          className='border-1 font-roboto mx-auto flex w-full flex-col gap-4 border-solid border-zinc-400 py-4 px-4 dark:text-zinc-300'
+          className="border-1 font-roboto mx-auto flex w-full flex-col gap-4 border-solid border-zinc-400 px-4 py-4 dark:text-zinc-300"
           style={{
-            maxWidth: '400px',
-            minWidth: '250px',
+            maxWidth: "400px",
+            minWidth: "250px",
           }}
         >
           <NumberInput
-            label='X'
+            label="X"
             value={actualLeft}
             onChange={(actLeft) => setX1(Math.min(actLeft / image.w, 1))}
           />
           <NumberInput
-            label='Y'
+            label="Y"
             value={actualTop}
             onChange={(actRight) => setY1(Math.min(actRight / image.h, 1))}
           />
           <NumberInput
-            label='Width'
+            label="Width"
             value={actualWidth}
             onChange={(actWidth) => {
               let newX2 = actWidth + x1 * image.w;
@@ -198,7 +198,7 @@ function Editor({ image }: EditorProps) {
             }}
           />
           <NumberInput
-            label='Height'
+            label="Height"
             value={actualHeight}
             onChange={(actHeight) => {
               let newY2 = actHeight + y1 * image.h;
@@ -221,22 +221,22 @@ function Editor({ image }: EditorProps) {
           <button
             onClick={async () => {
               if (downloaderRef.current) {
-                downloaderRef.current.href = await ImageAPI.use('crop', {
-                  id: image.id,
-                  ext: image.ext,
+                downloaderRef.current.href = await ImageAPI.use("crop", {
+                  base64: image.base64,
                   width: actualWidth,
                   height: actualHeight,
                   left: actualLeft,
                   top: actualTop,
                 });
+                downloaderRef.current.download = "Cropped-" + image.name;
                 downloaderRef.current.click();
               }
             }}
-            className='rounded-sm  bg-teal-600 p-4 text-white hover:bg-teal-700  dark:bg-teal-800 dark:text-zinc-300 dark:hover:bg-teal-600 '
+            className="rounded-sm  bg-teal-600 p-4 text-white hover:bg-teal-700  dark:bg-teal-800 dark:text-zinc-300 dark:hover:bg-teal-600 "
           >
             Download
           </button>
-          <a href='#' ref={downloaderRef} target='_blank' download hidden></a>
+          <a href="#" ref={downloaderRef} target="_blank" download hidden></a>
         </div>
       </div>
     </div>
@@ -246,7 +246,7 @@ const CropPage = () => {
   const [image, setImage] = useState<IMImage | null>(null);
   return (
     <Layout
-      name='Crop'
+      name="Crop"
       onUpload={(image) => setImage(image)}
       hasImage={image !== null}
     >

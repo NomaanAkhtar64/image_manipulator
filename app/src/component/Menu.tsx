@@ -30,9 +30,9 @@ const Menu = () => {
     "/color": [COLOR, RESIZE, CROP, SLICE],
   };
 
-  const [serviceParent] = useAutoAnimate<HTMLDivElement>({
+  const serviceParent = useAutoAnimate({
     duration: 300,
-  });
+  }) as React.RefObject<HTMLDivElement>;
 
   let title: string;
 
@@ -48,7 +48,7 @@ const Menu = () => {
         "menu-cont flex  flex-col items-center",
         isHome,
         "my-auto h-fit min-h-min",
-        "h-full bg-zinc-200 px-3 dark:bg-zinc-800 lg:fixed lg:top-0 lg:left-0 lg:h-full lg:min-h-[100dvh]"
+        "h-full bg-zinc-200 px-3 lg:fixed lg:left-0 lg:top-0 lg:h-full lg:min-h-[100dvh] dark:bg-zinc-800"
       )}
     >
       <Link

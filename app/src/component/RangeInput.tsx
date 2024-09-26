@@ -1,6 +1,6 @@
-import React from 'react';
-import { round2Digits } from '../utils/math';
-import NumberInput from './NumberInput';
+import React from "react";
+import { round2Digits } from "../utils/math";
+import NumberInput from "./NumberInput";
 
 interface RangeInputProps {
   label: string;
@@ -26,7 +26,7 @@ const RangeInput: React.FC<RangeInputProps> = ({
   const fallBackDefault = 0.5 * sliderMax;
 
   return (
-    <div className='flex w-full flex-col items-center  justify-between'>
+    <div className="flex w-full flex-col items-center  justify-between">
       <NumberInput
         value={Math.round(value * scaleFactor)}
         percentageSign={percentageSign}
@@ -34,9 +34,10 @@ const RangeInput: React.FC<RangeInputProps> = ({
         onChange={(v) => onChange(round2Digits(v / scaleFactor))}
         defaultVal={defaultVal || fallBackDefault}
       />
+
       <input
-        type='range'
-        className='w-full bg-transparent py-2 text-center '
+        type="range"
+        className="h-2 w-full cursor-pointer appearance-none rounded-lg bg-teal-200 accent-teal-700 dark:bg-gray-700"
         value={percent}
         onChange={(e) => {
           const v = (e.target.valueAsNumber / 100) * sliderMax;

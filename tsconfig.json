@@ -15,8 +15,8 @@
     "files": true
   },
   "files": [
-    "src/index.ts",
-    "src/types/data.d.ts"
+    "functions/api.ts",
+    "shared.d.ts"
   ],
-  "include": ["src/**/*", "src/types/*"]
+  "include": ["functions/**/*", "functions/types/*"]
 }

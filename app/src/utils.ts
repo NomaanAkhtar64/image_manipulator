@@ -19,17 +19,3 @@ export function isImage(name: string) {
 
   return image_exts.includes(ext.toLowerCase());
 }
-
-// export async function encodeImageFile(file: File): Promise<String> {
-//   return new Promise((response, reject) => {
-//     const reader = new FileReader();
-//     reader.onloadend = function () {
-//       if (typeof reader.result === 'string') {
-//         response(reader.result);
-//       } else {
-//         reject();
-//       }
-//     };
-//     reader.readAsDataURL(file);
-//   });
-// }

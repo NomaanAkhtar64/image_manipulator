@@ -16,9 +16,9 @@ const Layout: React.FC<LayoutProps> = ({
   onUpload,
   hasImage,
 }) => {
-  const [contentRef] = useAutoAnimate<HTMLDivElement>({
+  const contentRef = useAutoAnimate({
     duration: 300,
-  });
+  }) as React.RefObject<HTMLDivElement>;
   return (
     <div className="w my-auto flex h-full w-full items-start justify-center overflow-hidden lg:ml-24 lg:items-center lg:px-10">
       <div

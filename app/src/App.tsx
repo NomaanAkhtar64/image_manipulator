@@ -6,13 +6,13 @@ import { useAutoAnimate } from "@formkit/auto-animate/react";
 import CropPage from "./page/Crop";
 import SlicePage from "./page/Slice";
 import ColorPage from "./page/Color";
-import SwitchInput from "./component/SwitchInput";
+
 function App() {
   const location = useLocation();
-  const [parent] = useAutoAnimate<HTMLDivElement>({
+  const parent = useAutoAnimate({
     duration: 300,
     easing: "ease-out",
-  });
+  }) as React.RefObject<HTMLDivElement>;
 
   return (
     <div

@@ -1,5 +1,5 @@
-import React from 'react';
-import { DIGIT } from '../utils/regex';
+import React from "react";
+import { DIGIT } from "../utils/regex";
 
 interface NumberInputProps {
   label: string;
@@ -17,14 +17,15 @@ const NumberInput: React.FC<NumberInputProps> = ({
   percentageSign = false,
 }) => {
   return (
-    <div className='flex w-full flex-row items-center  justify-between'>
-      <label className='font-bold uppercase'>{label}</label>
+    <div className="flex w-full flex-row items-center  justify-between">
+      <label className="font-bold uppercase">{label}</label>
+
       <input
-        type='text'
-        className='w-14 bg-transparent py-2 text-center focus:outline focus:outline-2 focus:outline-teal-500'
-        value={`${value}${percentageSign ? '%' : ''}`}
+        type="text"
+        className="w-14 bg-gray-600 bg-transparent py-2 text-center focus:outline focus:outline-2 focus:outline-teal-500"
+        value={`${value}${percentageSign ? "%" : ""}`}
         onChange={(e) => {
-          let digitStr = e.target.value.replace(DIGIT, '');
+          let digitStr = e.target.value.replace(DIGIT, "");
           onChange(parseInt(digitStr || `${defaultVal || 0}`));
         }}
       />

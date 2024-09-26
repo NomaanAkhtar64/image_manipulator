@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
-import { useIsMobile } from './mobile';
-import { useWindowSize } from './window';
+import { useEffect, useState } from "react";
+import { useIsMobile } from "./mobile";
+import { useWindowSize } from "./window";
 
 export function useViewerMaxSize(image: IMImage): {
   width: number;
@@ -26,7 +26,7 @@ export function useViewerMaxSize(image: IMImage): {
       }
     } else if (win.width >= 1024) {
       // lg
-      let w = Math.min(win.width - 500, 900);
+      let w = Math.min(win.width - 500, 800);
       setMaxWidth(w);
       setMaxHeight(Math.round(w / aspectRatio));
     } else if (win.width >= 768) {
@@ -45,4 +45,3 @@ export function useViewerMaxSize(image: IMImage): {
     height: maxHeight,
   };
 }
-
