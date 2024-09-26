@@ -25,3 +25,6 @@ dist-ssr
 
 **/media/**/*.png
 **/media/**/*.jpg
+**/media/**/*.webp
+**/media/download/slice/*.*
+**/media/**/*.zip
